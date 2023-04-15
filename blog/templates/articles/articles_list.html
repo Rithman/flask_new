@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} Список статей {% endblock title %}
+{% block body %}
+<h2>Список статей:</h2>
+<ul>
+    {% for id in articles_list %}
+    <li><a href="{{ url_for('articles.render_article_by_pk', pk=id) }}"> {{ articles_list[id]['title'] }}</li></a>
+    {% endfor %}
+</ul>
+
+{% endblock body %}
