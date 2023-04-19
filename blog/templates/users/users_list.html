@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} Список пользователей {% endblock title %}
+{% block body %}
+
+<ul>
+    {% for id in users_list %}
+    <li><a href="{{ url_for('users.render_user_by_pk', pk=id) }}">{{ users_list[id] }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock body %}
