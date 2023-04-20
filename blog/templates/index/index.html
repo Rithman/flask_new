@@ -3,5 +3,13 @@
 {% block title %} Начальная страница {% endblock title %}
 {% block body %}
 <h1>Главная страница блога</h1>
+<h1>Привет,
+    {% if current_user.is_authenticated %}
+    {{ current_user.username }}
+    {% else %}
+    Анон
+    {% endif %}
+</h1>
+
 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores molestias illo impedit?
 {% endblock body %}

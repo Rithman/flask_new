@@ -4,8 +4,15 @@
 {% block body %}
 
 <ul>
-    {% for id in users_list %}
-    <li><a href="{{ url_for('users.render_user_by_pk', pk=id) }}">{{ users_list[id] }}</a></li>
+    {% for user in users_list %}
+    <li><a href="{{ url_for('users.details', pk=user.id) }}">{{ users_list[id] }}
+            {{ user.username -}}
+        </a>
+        {% if user.is_stuff %}
+        <span class="badge bg-secondary">Stuff</span>
+        {% endif %}
+    </li>
     {% endfor %}
+
 </ul>
 {% endblock body %}
