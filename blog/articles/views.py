@@ -3,7 +3,7 @@ from werkzeug.exceptions import NotFound
 
 from ..users.views import USERS_LIST
 
-articles = Blueprint('articles', __name__, url_prefix='/articles', static_folder='../static')
+articles_app = Blueprint('articles', __name__, url_prefix='/articles', static_folder='../static')
 
 ARTICLES_LIST = {
     1: 
@@ -28,12 +28,12 @@ ARTICLES_LIST = {
 }
 
 
-@articles.route('/')
+@articles_app.route('/')
 def render_articles():
     return render_template('articles/articles_list.html', articles_list=ARTICLES_LIST)
 
 
-@articles.route('/<int:pk>')
+@articles_app.route('/<int:pk>')
 def render_article_by_pk(pk:int):
     if pk in ARTICLES_LIST:
         article = ARTICLES_LIST[pk]
