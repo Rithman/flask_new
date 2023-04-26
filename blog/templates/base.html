@@ -28,6 +28,14 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ url_for('users.list') }}">Авторы</a>
                     </li>
+                    {% for (endpoint, label) in [('auth_app.login', 'Войти'), ('auth_app.register', 'Регистрация')] %}
+                        <li>
+                            <a href="{{ url_for(endpoint) }}"
+                                class="nav-link {% if request.endpoint == endpoint -%}active{% endif %}">
+                            {{ label }}
+                        </a>
+                    {% endfor %}
+                        </li>    
 
                 </ul>
                 <form class="d-flex" role="search">
