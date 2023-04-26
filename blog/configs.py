@@ -7,6 +7,7 @@ class BaseConfig:
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "abcdefg123456"
+    WTF_CSRF_ENABLED = True
 
 
 class DevConfig(BaseConfig):
@@ -18,5 +19,3 @@ class TestingConfig(BaseConfig):
     TESTING = True
 
 
-class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = "postgresql://user:password@pg:5432/blog"

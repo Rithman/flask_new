@@ -9,6 +9,7 @@ from .index.views import index_app
 from .articles.views import articles_app
 from .auth.views import auth_app, login_manager
 from blog.models.database import db
+from blog.security import flask_bcrypt
 
 
 load_dotenv()
@@ -34,7 +35,7 @@ def create_app() -> Flask:
     migrate = Migrate()
     migrate.init_app(app, db, compare_type=True)
 
-    
+    flask_bcrypt.init_app(app)
 
     return app
 
