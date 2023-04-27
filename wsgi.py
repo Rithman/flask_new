@@ -13,17 +13,6 @@ app.run(
 )
 
 
-# @app.cli.command("init-db")
-# def init_db():
-#     """
-#     Run in terminal:
-#     flask init-db
-#     """
-
-#     db.create_all()
-#     print("DB initialized!")
-
-
 @app.cli.command("create-admin")
 def create_admin():
     """
