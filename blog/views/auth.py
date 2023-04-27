@@ -26,7 +26,7 @@ def unauthorized():
 @auth_app.route("/login/", methods=["GET", "POST"], endpoint="login")
 def login():
     if current_user.is_authenticated:
-        return redirect("index.render_index")
+        return redirect(url_for("index.render_index"))
     
     form = LoginForm(request.form)
 
@@ -67,7 +67,7 @@ def secret_view():
 @auth_app.route("/register/", methods=["GET", "POST"], endpoint="register")
 def register():
     if current_user.is_authenticated:
-        return redirect("index.render_index")
+        return redirect(url_for("index.render_index"))
     
     error = None
     form = ResgistrationForm(request.form)

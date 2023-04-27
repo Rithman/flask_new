@@ -4,10 +4,10 @@ import os
 from dotenv import load_dotenv
 
 
-from .users.views import users_app
-from .index.views import index_app
-from .articles.views import articles_app
-from .auth.views import auth_app, login_manager
+from .views.users import users_app
+from .views.index import index_app
+from .views.articles import articles_app
+from .views.auth import auth_app, login_manager
 from blog.models.database import db
 from blog.security import flask_bcrypt
 
@@ -38,5 +38,6 @@ def create_app() -> Flask:
     flask_bcrypt.init_app(app)
 
     return app
+
 
 

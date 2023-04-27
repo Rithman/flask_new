@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint
 from werkzeug.exceptions import NotFound
 
-from ..users.views import USERS_LIST
+from ..views.users import USERS_LIST
 
 articles_app = Blueprint('articles', __name__, url_prefix='/articles', static_folder='../static')
 
