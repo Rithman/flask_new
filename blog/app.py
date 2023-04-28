@@ -8,6 +8,7 @@ from .views.users import users_app
 from .views.index import index_app
 from .views.articles import articles_app
 from .views.auth import auth_app, login_manager
+from  .views.authors import authors_app
 from blog.models.database import db
 from blog.security import flask_bcrypt
 
@@ -19,8 +20,9 @@ def create_app() -> Flask:
     app = Flask(__name__)
     app.register_blueprint(users_app)
     app.register_blueprint(index_app)
-    app.register_blueprint(articles_app)
+    app.register_blueprint(articles_app, url_prefix="/articles")
     app.register_blueprint(auth_app, url_prefix="/auth")
+    app.register_blueprint(authors_app, url_prefix="/authors")
 
 
     app.config["SECRET_KEY"] = 'abcdefg123456'

@@ -21,14 +21,14 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"
-                            href="{{ url_for('articles.render_articles') }}">Статьи</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url_for('users.list') }}">Авторы</a>
-                    </li>
-                    {% for (endpoint, label) in [('auth_app.login', 'Войти'), ('auth_app.register', 'Регистрация')] %}
+
+                    {% for (endpoint, label) in [
+                            ('users_app.list', 'Пользователи'),
+                            ('articles_app.list', 'Статьи'),
+                            ('authors_app.list', 'Авторы'),
+                            ('auth_app.login', 'Войти'), 
+                            ('auth_app.register', 'Регистрация')
+                        ] %}
                         <li>
                             <a href="{{ url_for(endpoint) }}"
                                 class="nav-link {% if request.endpoint == endpoint -%}active{% endif %}">
