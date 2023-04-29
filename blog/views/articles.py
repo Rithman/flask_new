@@ -1,42 +1,57 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, request, current_app, redirect, url_for
+from flask_login import login_required, current_user
+from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import NotFound
 
-from ..views.users import USERS_LIST
-
-articles_app = Blueprint('articles', __name__, url_prefix='/articles', static_folder='../static')
-
-ARTICLES_LIST = {
-    1: 
-    {
-        'title': 'Илон Макс: провидец или разведчик с Альфы Центавра?',
-        'text': 'Маск родился и вырос в Претории, ЮАР. Некоторое время учился в Преторийском университете, а в 17 лет переехал в Канаду. \
-                Поступил в Университет Куинс в Кингстоне и через два года перевёлся в Пенсильванский университет, \
-                где получил степень бакалавра по экономике и физике. В 1995 году переехал в Калифорнию, чтобы учиться в Стэнфордском университете, \
-                но вместо этого решил заняться бизнесом и вместе со своим братом Кимбалом  (англ.)рус. стал соучредителем компании Zip2, \
-                занимавшейся разработкой программного обеспечения для интернета. В 1999 году компания была приобретена Compaq за 307 миллионов долларов. \
-                В том же году Маск стал соучредителем онлайн-банка X.com, который в 2000 году конгломеративным путем консолидировался с Confinity и образовал PayPal...',
-        'author': 1
-    },
-    2: 
-    {
-        'title': 'GTA по-американски…',
-        'text': 'Курьезный случай произошел в США. Мужчина оставил на заправке свою машину, а собака, находившаяся в салоне авто, \
-                 решила «порулить» и протаранила другой автомобиль. Как маленькому песику породы чихуахуа удалось управлять автомобилем Toyota не понятно.',
-        'author': 2
-    },
-    
-}
+from blog.models.database import db
+from blog.models import Author, Article
+from blog.forms.article import CreateArticleForm
 
 
-@articles_app.route('/')
-def render_articles():
-    return render_template('articles/articles_list.html', articles_list=ARTICLES_LIST)
+articles_app = Blueprint('articles_app', __name__)
 
 
-@articles_app.route('/<int:pk>')
-def render_article_by_pk(pk:int):
-    if pk in ARTICLES_LIST:
-        article = ARTICLES_LIST[pk]
-        return render_template('articles/article_details.html', title=article['title'], text=article['text'], user_id=article['author'], user_name=USERS_LIST[article['author']])
-    else:
-        raise NotFound(f'Article with id: {pk} NOT FOUND')
+
+@articles_app.route('/', endpoint="list")
+def articles_list():
+    articles = Article.query.all()
+    return render_template('articles/list.html', articles=articles)
+
+
+@articles_app.route('/<int:article_id>/', endpoint="details")
+def article_details(article_id):
+    article = Article.query.filter_by(id=article_id).one_or_none()
+    if article is None:
+        raise NotFound
+    return render_template("articles/details.html", article=article)
+
+
+@articles_app.route("/create/", methods=["GET", "POST"], endpoint="create")
+@login_required
+def create_article():
+    error = None
+    form = CreateArticleForm(request.form)
+    print(request.method)
+    if request.method == "POST" and form.validate_on_submit():
+        print("Form is valid!")
+        article = Article(title=form.title.data.strip(), body=form.body.data)
+        
+        if current_user.author:
+            article.author = current_user.author
+        else:
+            author = Author(user_id=current_user.id)
+            db.session.add(author)
+            db.session.commit()
+            article.author = current_user.author
+
+        try:
+            db.session.add(article)
+            db.session.commit()
+            print("Commit successful!")
+        except IntegrityError:
+            current_app.logger.exception("Could not create new article!")
+            error = "Could not create new article!"
+        else:
+            return redirect(url_for("articles_app.details", article_id=article.id))
+        
+    return render_template("articles/create.html", form=form, error=error)

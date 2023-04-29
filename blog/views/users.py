@@ -2,7 +2,7 @@ from flask import render_template, Blueprint
 from werkzeug.exceptions import NotFound
 from blog.models.user import User
 
-users_app = Blueprint('users', __name__, url_prefix='/users', static_folder='../static')
+users_app = Blueprint('users_app', __name__, url_prefix='/users', static_folder='../static')
 
 USERS_LIST = {1: 'admin', 2: 'James', 3: 'Anna', 4: 'Victor', 5: 'Olga'}
 
