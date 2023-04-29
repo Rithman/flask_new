@@ -11,4 +11,12 @@
         <div>Опубликовано {{ article.dt_created }} </div>
         <div>Автор {{ article.author.user.username }} </div>
     </div>
+    {% if article.tags %}
+        <div>Теги:</div>
+        <ul>
+            {% for tag in article.tags %}
+                <li>{{ tag.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock body %}
