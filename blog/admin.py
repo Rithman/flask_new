@@ -11,7 +11,7 @@ from blog.models.database import db
 class CustomView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_staff
-    
+
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for("auth_app.login"))
 
@@ -47,7 +47,6 @@ class MyAdminIndexView(AdminIndexView):
 
 admin = Admin(name="Blog Admin", index_view=MyAdminIndexView(), template_mode="bootstrap4",)
 
-admin.add_view(CustomView(models.Tag, db.session, category="Models"))
 admin.add_view(CustomView(models.Tag, db.session, category="Models"))
 admin.add_view(CustomView(models.Article, db.session, category="Models"))
 admin.add_view(TagAdminView(models.Tag, db.session, category="Models"))
