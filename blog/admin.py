@@ -38,13 +38,13 @@ class MyAdminIndexView(AdminIndexView):
 
     @expose("/")
     def index(self):
-        if not (current_user.is_authenticated and current_user.is_stuff):
+        if not (current_user.is_authenticated and current_user.is_staff):
             return redirect(url_for("auth_app.login"))
         return super(MyAdminIndexView, self).index()
 
 
 
-admin = Admin(name="Blog Admin", index_view=MyAdminIndexView, template_mode="bootstrap4",)
+admin = Admin(name="Blog Admin", index_view=MyAdminIndexView(), template_mode="bootstrap4",)
 
 admin.add_view(CustomView(models.Tag, db.session, category="Models"))
 admin.add_view(CustomView(models.Tag, db.session, category="Models"))
