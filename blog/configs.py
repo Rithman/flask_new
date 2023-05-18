@@ -19,3 +19,5 @@ class TestingConfig(BaseConfig):
     TESTING = True
 
 
+FLASK_ADMIN_SWATCH = 'cosmo'
+
