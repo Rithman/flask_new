@@ -21,3 +21,4 @@ class TestingConfig(BaseConfig):
 
 FLASK_ADMIN_SWATCH = 'cosmo'
 
+

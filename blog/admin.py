@@ -29,6 +29,7 @@ class UserAdminView(CustomView):
     column_exclude_list = ("_password",)
     column_searchable_list = ("first_name", "last_name", "username", "is_staff", "email")
     column_filters = ("first_name", "last_name", "is_staff")
+    column_editable_list = ("first_name", "last_name", "is_staff")
     can_create = True
     can_edit = True
     can_delete = False
