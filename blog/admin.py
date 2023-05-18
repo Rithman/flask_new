@@ -47,7 +47,7 @@ class MyAdminIndexView(AdminIndexView):
 
 admin = Admin(name="Blog Admin", index_view=MyAdminIndexView(), template_mode="bootstrap4",)
 
-admin.add_view(CustomView(models.Tag, db.session, category="Models"))
+# admin.add_view(CustomView(models.Tag, db.session, category="Models"))
 admin.add_view(CustomView(models.Article, db.session, category="Models"))
 admin.add_view(TagAdminView(models.Tag, db.session, category="Models"))
 admin.add_view(UserAdminView(models.User, db.session, category="Models"))
