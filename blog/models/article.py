@@ -16,4 +16,7 @@ class Article(db.Model):
     dt_updated = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     tags = relationship("Tag", secondary=article_tag_assosiation_table, back_populates="articles")
 
+    def __str__(self):
+        return self.title
+
 
