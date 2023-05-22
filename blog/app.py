@@ -12,6 +12,7 @@ from  .views.authors import authors_app
 from blog.models.database import db
 from blog.security import flask_bcrypt
 from blog.admin import admin
+# from blog.api import init_api
 
 
 load_dotenv()
@@ -27,7 +28,7 @@ def create_app() -> Flask:
 
 
     app.config["SECRET_KEY"] = 'abcdefg123456'
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/blog.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
 
@@ -40,6 +41,7 @@ def create_app() -> Flask:
 
     flask_bcrypt.init_app(app)
     admin.init_app(app)
+    # api = init_api(app)
 
     return app
 

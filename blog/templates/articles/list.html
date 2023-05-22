@@ -14,7 +14,7 @@
         {% for article in articles %}
             <li>
                 <a href="{{url_for('articles_app.details', article_id=article.id) }}">{{ article.title }}</a>
-                автор: {{ article.author.user.username }} 
+                автор: {{ article.author }} 
             </li>
         {% endfor %}
     </ul>
